@@ -652,6 +652,11 @@ static void HandleRequest(const http_RequestInfo &request, http_IO *io)
         io->AddHeader(header.key, header.value);
     }
 
+    if (TestStr(request.path, "/hello")) {
+        io->SendText(200, "Hello World!");
+        return;
+    }
+
     if (config.proxy_first && HandleProxy(request, io))
         return;
     if (HandleLocal(request, io))
